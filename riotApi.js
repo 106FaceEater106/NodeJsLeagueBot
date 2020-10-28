@@ -1,18 +1,37 @@
-var superagent = require('superagent');
+var https = require('https');
+const config = require('./config.js');
 
-var defaultHeaders = {};
-function isObject(obj) { return Object(obj) === obj; };
-
-function request(method, url) {
-   return superagent(method, url).set(defaultHeaders);
-}
-
-request.set = function (field, value) {
-   if (isObject(field)) {
-      for(var key in field) this.set(key, field[key]);
-      return this;
-   }
-   defaultHeaders[field] = value;
-   return this;
-}
-module.exports = request;
+module.exports = {
+    consulta: function(url, metodo, devuelveInformacion){
+        const options = {
+            hostname: '127.0.0.1',
+            port: config['puerto'],
+            path: url,
+            method: metodo,
+            headers: { 
+                'Authorization': 'Basic ' + config['auth']
+            },
+            rejectUnauthorized: false,
+            encoding: 'utf8', 
+            
+          };
+          
+          const req = https.request(options, res => {
+            //console.log(`statusCode: ${res.statusCode} || ${options['hostname']} ${options['port']} ${auth}`);
+          
+            res.on('data', data => {
+                if(devuelveInformacion){
+                    return data;
+                }else{
+                    process.stdout.write(`${data}`);
+                }
+            });
+          });
+          
+          req.on('error', error => {
+            console.error(error)
+          })
+          
+          req.end()
+    }
+};
