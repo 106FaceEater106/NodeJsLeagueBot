@@ -1,5 +1,5 @@
 var https = require('https');
-const config = require('./config.js');
+const config = require('../config.js');
 
 module.exports = {
     consulta: function(url, metodo, devuelveInformacion){

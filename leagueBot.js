@@ -1,7 +1,7 @@
 const robot = require("robotjs");
-const pixel = require("./pixel.js");
+const pixel = require("./detection/pixel.js");
 const config = require("./config.js");
-const clientManager = require("./clientManager.js");
+const clientManager = require("./managers/clientManager.js");
 // Api calls etc..
 
 /* Limpiar consola antes */
