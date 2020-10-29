@@ -16,16 +16,20 @@ module.exports = {
             
           };
           
+          let respuesta = "";
+
           const req = https.request(options, res => {
-            //console.log(`statusCode: ${res.statusCode} || ${options['hostname']} ${options['port']} ${auth}`);
-          
-            res.on('data', data => {
-                if(devuelveInformacion){
-                    return data;
-                }else{
+            if(devuelveInformacion){
+                res.on('data', data => {
+                    respuesta += data;
+                }).on('end',()=>{
+                    return respuesta;
+                });
+            }else{
+                res.on('data', data => {
                     process.stdout.write(`${data}`);
-                }
-            });
+                });
+            }
           });
           
           req.on('error', error => {
