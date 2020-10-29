@@ -9,7 +9,7 @@ module.exports = {
     inicializar: function(){
         const buffer = fs.readFileSync(config['leagueOfLegendsLockfile']);
         const args = buffer.toString().split(":");
-        config['auth'] = Buffer.from('riot:'+args[3]).toString('base64')
+        config['auth'] = Buffer.from('riot:'+args[3]).toString('base64');
         config['puerto'] = args[2];
     },
     // --------------- Informaciones Basicas
